@@ -40,7 +40,8 @@ void delay(uint32_t ms) {
 
 static uint64_t ts_start = 0;
 
-unsigned long millis()
+
+extern "C" unsigned long millis()
 {
   struct timespec ts;
 
