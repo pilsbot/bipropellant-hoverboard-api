@@ -33,6 +33,7 @@ extern "C"
 #else
 #include <unistd.h>
 #include <time.h>
+extern "C" {
 
 void delay(uint32_t ms) {
   usleep (ms*1000);
@@ -41,7 +42,7 @@ void delay(uint32_t ms) {
 static uint64_t ts_start = 0;
 
 
-extern "C" unsigned long millis()
+long millis()
 {
   struct timespec ts;
 
@@ -56,6 +57,8 @@ extern "C" unsigned long millis()
 
   return (uint32_t)(ts_now - ts_start);
 }
+
+}
 #endif
 
 uint32_t tickWrapper(void)
@@ -63,9 +66,9 @@ uint32_t tickWrapper(void)
   return (uint32_t) millis();
 }
 
-HoverboardAPI::HoverboardAPI(int (*send_serial_data)( unsigned char *data, int len ))
+HoverboardAPI::HoverboardAPI(int (*send_serial_data)( unsigned char *data, int len )) :
+  HoverboardAPI()
 {
-  HoverboardAPI();
   setSendSerialData(send_serial_data);
 }
 
